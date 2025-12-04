@@ -1,0 +1,327 @@
+/* ---------------- RESET ---------------- */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body{
+    background: #f4f7ff;
+    overflow-x: hidden;
+}
+
+/* ---------------- HEADER ---------------- */
+.header{
+    width: 100%;
+    height: 90px;
+    background: rgba(100, 149, 237, 0.9);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    border-radius: 0 0 20px 20px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+}
+
+.left{
+    display: flex;
+    align-items: center;
+}
+
+.imglogo{
+    width: 65px;
+    margin-right: 14px;
+    transition: 0.3s;
+}
+
+.imglogo:hover{
+    transform: scale(1.05);
+}
+
+.brand{
+    font-size: 30px;
+    color: white;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+/* HEADER BUTTONS */
+.btn-login, .btn-register{
+    padding: 10px 26px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    margin-left: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-login{
+    border: 2px solid white;
+    color: white;
+}
+
+.btn-login:hover{
+    background: white;
+    color: #3A75C4;
+}
+
+.btn-register{
+    background: white;
+    color: #3A75C4;
+    font-weight: 700;
+}
+
+.btn-register:hover{
+    background: #d6e4ff;
+    transform: translateY(-2px);
+}
+
+/* ---------------- HERO SECTION ---------------- */
+.text{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    padding: 120px 40px 80px 40px; /* padding-top accounts for fixed header */
+    flex-wrap: wrap;
+}
+
+.text-content{
+    max-width: 500px;
+}
+
+.text-content h1{
+    font-size: 50px;
+    color: #2C4DA5;
+}
+
+.text-content p{
+    margin: 15px 0 25px;
+    font-size: 18px;
+    color: #444;
+}
+
+.text-button a{
+    text-decoration: none;
+    padding: 12px 30px;
+    border-radius: 30px;
+    font-weight: 600;
+    margin-right: 12px;
+    transition: 0.3s;
+}
+
+.btn-main{
+    background: #3A75C4;
+    color: white;
+}
+
+.btn-main:hover{
+    background: #2C4DA5;
+}
+
+.btn-outline{
+    border: 2px solid #3A75C4;
+    color: #3A75C4;
+}
+
+.hero-img{
+    width: 380px;
+    animation: float 3s infinite ease-in-out;
+}
+
+@keyframes float{
+    0%{transform: translateY(0);}
+    50%{transform: translateY(-12px);}
+    100%{transform: translateY(0);}
+}
+
+/* ---------------- VEHICLE CARDS ---------------- */
+.section{
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.section h2{
+    font-size: 32px;
+    margin-bottom: 30px;
+    color: #2C4DA5;
+}
+
+.cards{
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+.card{
+    width: 250px;
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 5px 14px rgba(0,0,0,0.12);
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.card:hover{
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.25);
+}
+
+.card img{
+    width: 120px;
+}
+
+.card h3{
+    margin-top: 10px;
+    font-size: 22px;
+}
+
+.card p{
+    font-size: 16px;
+    color: #555;
+}
+
+/* ---------------- FEATURES ---------------- */
+.features{
+    background: #eaf0ff;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.feature-box{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.feature-box div{
+    margin: 12px;
+    font-size: 18px;
+    background: white;
+    padding: 15px 25px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+.feature-box div:hover{
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+/* ---------------- HOW IT WORKS ---------------- */
+.steps{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.step{
+    background: #3A75C4;
+    color: white;
+    padding: 18px 28px;
+    font-size: 18px;
+    border-radius: 14px;
+    transition: 0.3s;
+}
+
+.step:hover{
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* ---------------- FOOTER ---------------- */
+.footer{
+    background: #2C4DA5;
+    color: white;
+    text-align: center;
+    padding: 25px;
+    margin-top: 40px;
+}
+
+/* ---------------- MODAL LOGIN/REGISTER ---------------- */
+.blur {
+    filter: blur(6px);
+    transition: 0.3s;
+}
+
+.form-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: none; /* hidden initially */
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.form-box{
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+    display: none; /* hidden initially */
+}
+
+.form-box.active{
+    display: block; /* show active form */
+}
+
+.form-box h2{
+    color: #2C4DA5;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-box input{
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+.form-box button{
+    width: 100%;
+    padding: 12px;
+    background-color: #3A75C4;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.form-box button:hover{
+    background-color: #2C4DA5;
+}
+
+.form-box p{
+    text-align: center;
+    margin-top: 15px;
+}
+
+.form-box p a{
+    color: #3A75C4;
+    text-decoration: none;
+}
+
+.form-box p a:hover{
+    text-decoration: underline;
+}

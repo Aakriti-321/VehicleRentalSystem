@@ -10,26 +10,27 @@ if($conn->connect_error) die("Connection Failed");
 
 $admin_email = $_SESSION['admin'];
 
-
 if(isset($_POST['add_vehicle'])) {
     $name = $_POST['vehicle_name'];
     $category = $_POST['category_type'];
     $model = $_POST['model'];
     $price = $_POST['price_per_day'];
-    $status = 'Available';
+    $image = $_POST['image_url'];
 
-   
-    $img_name = $_FILES['image']['name'];
-    $img_tmp = $_FILES['image']['tmp_name'];
-    move_uploaded_file($img_tmp, "uploads/".$img_name);
-
-    $conn->query("INSERT INTO vehicles (vehicle_name, category_type, model, price_per_day, image, status) 
-                  VALUES ('$name','$category','$model','$price','$img_name','$status')");
+    $conn->query("INSERT INTO vehicles (vehicle_name, category_type, model, price_per_day, image) 
+                  VALUES ('$name','$category','$model','$price','$image')");
 }
 
 if(isset($_GET['delete'])) {
     $id = $_GET['delete'];
-    $conn->query("DELETE FROM vehicles WHERE vehicle_id=$id");
+    $check = $conn->query("SELECT * FROM bookings WHERE vehicle_id=$id");
+    
+    if($check->num_rows > 0) {
+        echo "<script>alert('Cannot delete this vehicle. It has existing bookings.'); window.location='admin_vehiclemanages.php';</script>";
+    } else {
+        $conn->query("DELETE FROM vehicles WHERE vehicle_id=$id");
+        echo "<script>alert('Vehicle deleted successfully.'); window.location='admin_vehiclemanages.php';</script>";
+    }
 }
 
 if(isset($_POST['update_vehicle'])) {
@@ -38,15 +39,9 @@ if(isset($_POST['update_vehicle'])) {
     $category = $_POST['category_type'];
     $model = $_POST['model'];
     $price = $_POST['price_per_day'];
+    $image = $_POST['image_url'];
 
-    if($_FILES['image']['name'] != "") {
-        $img_name = $_FILES['image']['name'];
-        $img_tmp = $_FILES['image']['tmp_name'];
-        move_uploaded_file($img_tmp, "uploads/".$img_name);
-        $conn->query("UPDATE vehicles SET vehicle_name='$name', category_type='$category', model='$model', price_per_day='$price', image='$img_name' WHERE vehicle_id=$id");
-    } else {
-        $conn->query("UPDATE vehicles SET vehicle_name='$name', category_type='$category', model='$model', price_per_day='$price' WHERE vehicle_id=$id");
-    }
+    $conn->query("UPDATE vehicles SET vehicle_name='$name', category_type='$category', model='$model', price_per_day='$price', image='$image' WHERE vehicle_id=$id");
 }
 
 $vehicles = $conn->query("SELECT * FROM vehicles ORDER BY vehicle_id DESC");
@@ -86,25 +81,24 @@ if(isset($_GET['edit'])) {
 
     <div class="main">
         <h2>Add Vehicle</h2>
-        <form method="POST" enctype="multipart/form-data">
+        <form method="POST">
             <input type="text" name="vehicle_name" placeholder="Vehicle Name" required>
             <input type="text" name="category_type" placeholder="Category Type" required>
             <input type="text" name="model" placeholder="Model" required>
             <input type="number" name="price_per_day" placeholder="Price Per Day" required>
-            <input type="file" name="image" required> <br>
+            <input type="text" name="image_url" placeholder="Enter Image URL" required><br>
             <button type="submit" name="add_vehicle">Add Vehicle</button><br><br>
-
         </form>
 
         <?php if($edit_vehicle): ?>
         <h2>Update Vehicle</h2>
-        <form method="POST" enctype="multipart/form-data">
+        <form method="POST">
             <input type="hidden" name="vehicle_id" value="<?= $edit_vehicle['vehicle_id'] ?>">
             <input type="text" name="vehicle_name" value="<?= $edit_vehicle['vehicle_name'] ?>" required>
             <input type="text" name="category_type" value="<?= $edit_vehicle['category_type'] ?>" required>
             <input type="text" name="model" value="<?= $edit_vehicle['model'] ?>" required>
             <input type="number" name="price_per_day" value="<?= $edit_vehicle['price_per_day'] ?>" required>
-            <input type="file" name="image"><br>
+            <input type="text" name="image_url" value="<?= $edit_vehicle['image'] ?>" required><br>
             <button type="submit" name="update_vehicle">Update Vehicle</button><br><br>
         </form>
         <?php endif; ?>
@@ -118,7 +112,6 @@ if(isset($_GET['edit'])) {
                 <th>Model</th>
                 <th>Price</th>
                 <th>Image</th>
-                <th>Status</th>
                 <th>Action</th>
             </tr>
             <?php while($v = $vehicles->fetch_assoc()): ?>
@@ -128,8 +121,7 @@ if(isset($_GET['edit'])) {
                 <td><?= $v['category_type'] ?></td>
                 <td><?= $v['model'] ?></td>
                 <td><?= $v['price_per_day'] ?></td>
-                <td><img src="uploads/<?= $v['image'] ?>" width="70"></td>
-                <td><?= $v['status'] ?></td>
+                <td><img src="<?= htmlspecialchars($v['image']) ?>" width="70" alt="Vehicle Image"></td>
                 <td>
                     <a href="?edit=<?= $v['vehicle_id'] ?>" class="button">Edit</a>
                     <a href="?delete=<?= $v['vehicle_id'] ?>" class="button button-red" onclick="return confirm('Are you sure?')">Delete</a>

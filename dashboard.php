@@ -4,23 +4,43 @@ if(!isset($_SESSION['username'])){
     header("Location: index.php");
     exit();
 }
+
+$conn = new mysqli("localhost","root","","vehiclerentalsystem");
+if($conn->connect_error) die("Database connection failed");
+
+$username = $_SESSION['username'];
+
+// Total vehicles
+$totalVehicles = $conn->query("SELECT COUNT(*) AS total FROM vehicles")->fetch_assoc()['total'];
+
+// Total bookings by this user
+$totalBookings = $conn->query("SELECT COUNT(*) AS total FROM bookings WHERE user_name='$username'")->fetch_assoc()['total'];
+
+// Total booked vehicles by this user (paid bookings)
+$bookedVehicles = $conn->query("SELECT COUNT(DISTINCT vehicle_id) AS total FROM bookings WHERE user_name='$username' AND payment_status='completed'")->fetch_assoc()['total'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vehicle Rental Dashboard</title>
-    <link rel="stylesheet" href="dashboard.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vehicle Rental Dashboard</title>
+<link rel="stylesheet" href="dashboard.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+<style>
+/* Cards */
+.cards { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 30px;}
+.card { flex: 1; min-width: 200px; background: #fff; padding: 20px; border-radius: 10px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1);}
+.card h2 { font-size: 2em; margin: 0; color: #333;}
+.card p { color: #777; margin: 5px 0 0;}
+</style>
 </head>
 <body>
-       <header> 
-     <img src="logo1.jpg" alt="">
+<header> 
+    <img src="logo1.jpg" alt="">
     <h4>EasyRide</h4>
 </header>
 <div class="flex">
-
     <div class="sidebar">
         <img src="https://t4.ftcdn.net/jpg/16/09/59/37/360_F_1609593795_Ae1PPBgGSiy2tKw4GWXeXJtBTQn3dWpn.jpg" alt="Profile">
         <h4>Welcome, <?php echo $_SESSION['username']; ?></h4>
@@ -44,6 +64,34 @@ if(!isset($_SESSION['username'])){
                 <h2>Dashboard</h2>
                 <p>Rent your perfect vehicle easily: car, bike, or scooter. Check availability, compare prices, and book your ride in just a few clicks!</p>
             </div>
+
+           <!-- Summary Cards -->
+<div class="cards">
+    <div class="card">
+        <div class="card-top">
+            <h2><?php echo $totalVehicles; ?></h2>
+            <span class="material-icons-sharp">directions_car</span>
+        </div>
+        <p>Total Vehicles</p>
+    </div>
+
+    <div class="card">
+        <div class="card-top">
+            <h2><?php echo $totalBookings; ?></h2>
+            <span class="material-icons-sharp">event</span> <!-- Changed icon -->
+        </div>
+        <p>My Bookings</p>
+    </div>
+
+    <div class="card">
+        <div class="card-top">
+            <h2><?php echo $bookedVehicles; ?></h2>
+            <span class="material-icons-sharp">check_circle</span>
+        </div>
+        <p>Booked Vehicles</p>
+    </div>
+</div>
+
 
             <h2>Trending Vehicles</h2>
             <div class="trending">

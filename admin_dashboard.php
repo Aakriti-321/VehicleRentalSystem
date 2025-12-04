@@ -13,7 +13,7 @@ $admin_email = $_SESSION['admin'];
 $total_users = $conn->query("SELECT COUNT(*) as count FROM users")->fetch_assoc()['count'];
 $total_vehicles = $conn->query("SELECT COUNT(*) as count FROM vehicles")->fetch_assoc()['count'];
 $total_bookings = $conn->query("SELECT COUNT(*) as count FROM bookings")->fetch_assoc()['count'];
-$pending_bookings = $conn->query("SELECT COUNT(*) as count FROM bookings WHERE status='Pending'")->fetch_assoc()['count'];
+
 
 $query = "SELECT id, username, email, created_at FROM users ORDER BY created_at DESC LIMIT 5";
 $result = $conn->query($query);
@@ -61,11 +61,6 @@ $result = $conn->query($query);
                 <h3>Total Bookings</h3>
                 <p><?= $total_bookings ?></p>
             </div>
-            <div class="card">
-                <h3>Pending Bookings</h3>
-                <p><?= $pending_bookings ?></p>
-            </div>
-        </div>
         <div class="text">
             <h2>Recent Users</h2>
             <table width="100%" cellpadding="10">

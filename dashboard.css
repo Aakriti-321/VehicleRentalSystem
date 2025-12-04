@@ -5,184 +5,252 @@
 }
 
 body {
-background-color:white;
+  background-color: #f0f2f5;
+  font-family: 'Poppins', sans-serif;
 }
 
+/* ---------------- HEADER ---------------- */
 header {
-width: 200%;
-background: linear-gradient(90deg, #1e90ff, #3692b0);
-padding: 15px 0;
-text-align: left;
-color: white;
-font-weight: bold;
-font-size: 24px;
-letter-spacing: 1px;
-box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-position: fixed;
-top: 0;
-left: 0;
-z-index: 1000;
-padding-left: 20px;
-display: flex;
-align-items: center;
-gap: 15px;
+  width: 100%;
+  background: linear-gradient(90deg, #1e90ff, #3692b0);
+  padding: 15px 20px;
+  text-align: left;
+  color: white;
+  font-weight: bold;
+  font-size: 24px;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
 header img {
-width: 80px;
-height: 40px;
-border-radius: 50%;
-object-fit: cover;
+  width: 80px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
+/* ---------------- FLEX LAYOUT ---------------- */
 .flex {
-display: flex;
-margin-top: 70px;
+  display: flex;
+  margin-top: 90px;
 }
 
+/* ---------------- SIDEBAR ---------------- */
 .sidebar {
-width: 220px;
-background-color:blue;
-color: white;
-min-height: calc(150vh - 100px);
-padding: 20px 10px;
-position: fixed;
-top: 70px;
-display: flex;
-flex-direction: column;
-align-items: center;
+  width: 220px;
+  background-color: #1a126f;
+  color: white;
+  min-height: 100vh;
+  padding: 20px 10px;
+  position: fixed;
+  top: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .sidebar img {
-width: 80px;
-height: 80px;
-border-radius: 50%;
-margin-bottom: 10px;
-border: 3px solid #fff;
-object-fit: cover;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+  border: 3px solid #fff;
+  object-fit: cover;
 }
 
 .sidebar h4 {
-text-align: center;
-margin-bottom: 30px;
-font-size: 16px;
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 16px;
 }
 
 .menu {
-display: flex;
-align-items: center;
-width: 100%;
-padding: 10px 15px;
-color: white;
-text-decoration: none;
-border-radius: 8px;
-margin-bottom: 8px;
-transition: background 0.3s, transform 0.2s;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 10px 15px;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  transition: background 0.3s, transform 0.2s;
 }
 
 .menu:hover {
-background-color: rgb(62, 62, 158);
-transform: translateX(5px);
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateX(5px);
 }
 
 .menu span {
-margin-right: 10px;
-font-size: 20px;
+  margin-right: 10px;
+  font-size: 20px;
 }
 
+/* ---------------- MAIN CONTENT ---------------- */
 .main {
-margin-left: 220px;
-padding: 20px;
-flex: 1;
+  flex: 1;
+  margin-left: 220px;
+  padding: 30px;
 }
 
 .text h2 {
-font-weight: bolder;
-padding-bottom: 10px;
-color: #333;
-}
-.text {
-  padding: 12px;
-}
-.text > h2 {
+  font-size: 32px;
+  margin-bottom: 20px;
+  color: #020c2a;
   font-weight: bolder;
-  padding-bottom: 5px;
 }
 
-body {
-    margin: 0;
-    background-color: #f0f2f5;
+.text p {
+  margin-bottom: 20px;
+  color: #6e6e6e;
 }
 
-.flex {
+/* ---------------- DASHBOARD BOXES ---------------- */
+.box {
+  width: 220px;
+  height: 120px;
+  background-color: #132b6a;
+  border: 2px solid #1a126f;
+  border-radius: 10px;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+}
+
+.boxtext h4 {
+  color: #ffffff;
+  margin: 0;
+}
+
+.box p {
+  font-weight: bold;
+  font-size: 30px;
+  color: aliceblue;
+  margin-left: 10px;
+}
+
+.round {
+  border: 2px solid #ffffff;
+  padding: 10px;
+  border-radius: 50%;
+  background: #ffffff;
+  margin-top: 10px;
+}
+
+.round i {
+  font-size: 18px;
+  color: #053756;
+}
+
+/* ---------------- TRENDING VEHICLES ---------------- */
+.section {
+  padding: 60px 20px;
+}
+
+.section h2 {
+  font-size: 32px;
+  margin-bottom: 30px;
+  color: #020c2a;
+}
+.cards {
     display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
 }
 
-.main {
-    flex: 1;
-    padding: 30px;
+.card {
+    background-color: #1a126f;
+    color: white;
+    padding: 20px;
+    border-radius: 15px;
+    width: 200px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.main h2 {
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+}
+
+.card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 10px;
 }
 
-.main p {
-    margin-bottom: 20px;
+.card h2 {
+    font-size: 28px;
+    margin: 0;
 }
 
-.trending {
-    display: flex;
-    flex-direction: column;
-   gap: 10px;
+.card p {
+    font-size: 16px;
+    margin: 0;
+}
+
+/* Icon styling */
+.card-top .material-icons-sharp {
+    font-size: 32px;
+    color: #ffce00; /* gold/yellow color for icons */
 }
 
 .vehicle {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    padding: 20px;
-    width: 40%;
-    box-sizing: border-box;
-    font-size: 14px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 20px;
+  width: 100%;
+  margin-bottom: 15px;
+  font-size: 14px;
 }
 
 .vehicle .top {
-    display: flex;
-    gap: 15px;
-    align-items: flex-start;
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
 }
 
 .vehicle img {
-    width: 100px;
-    height: auto;
-    border-radius: 8px;
+  width: 100px;
+  height: auto;
+  border-radius: 8px;
 }
 
 .vehicle .info h3 {
-    margin: 0;
-    font-size: 16px;
-    color: #333;
+  margin: 0;
+  font-size: 16px;
+  color: #333;
 }
 
 .vehicle button {
-    padding: 6px 10px;
-    margin-top: 15px;
-    background-color: #ff4d4f;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  padding: 6px 10px;
+  margin-top: 15px;
+  background-color: #ff4d4f;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .vehicle button:hover {
-    background-color: #c0392b;
+  background-color: #c0392b;
 }
 
 .details {
-    margin-top: 10px;
-    display: none;
-    background-color: #f9f9f9;
-    padding: 10px;
-    border-radius: 5px;
+  margin-top: 10px;
+  display: none;
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 5px;
 }
