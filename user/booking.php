@@ -10,35 +10,37 @@ if ($conn->connect_error) die("Database connection failed");
 
 $username = $_SESSION['username'];
 
+// eSewa configuration
 $secretKey = "8gBm/:&EnhH.1/q"; 
 $product_code = "EPAYTEST";
 $signed_field_names = "total_amount,transaction_uuid,product_code";
 
-// Handle new booking
+// Handle booking submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['vehicle_id'])) {
     $vehicle_id = intval($_POST['vehicle_id']);
     $start_date = $_POST['start_date'];
     $end_date = $_POST['end_date'];
     $today = date('Y-m-d');
 
-    // Validate dates
-    if (empty($start_date) || empty($end_date)) {
-        echo "<script>alert('Please select start and end dates'); window.location='rent.php';</script>";
-        exit();
-    }
+    // Check if vehicle is available
+    $stmt = $conn->prepare("
+        SELECT * FROM bookings
+        WHERE vehicle_id = ?
+          AND pickup_status = 'approved'
+          AND NOT (end_date < ? OR start_date > ?)
+    ");
+    $stmt->bind_param("iss", $vehicle_id, $start_date, $end_date);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    if ($start_date < $today || $end_date < $today) {
-        echo "<script>alert('You cannot book for past dates!'); window.location='rent.php';</script>";
+    if ($result->num_rows > 0) {
+        echo "<script>alert('Vehicle not available for the selected dates'); window.location='rent.php';</script>";
         exit();
     }
-
-    if (strtotime($end_date) < strtotime($start_date)) {
-        echo "<script>alert('End date cannot be before start date'); window.location='rent.php';</script>";
-        exit();
-    }
+    $stmt->close();
 
     // Fetch vehicle info
-    $result = $conn->query("SELECT vehicle_name, model, price_per_day ,pickup_status FROM vehicles WHERE vehicle_id = $vehicle_id");
+    $result = $conn->query("SELECT vehicle_name, model, price_per_day FROM vehicles WHERE vehicle_id = $vehicle_id");
     if ($result->num_rows == 0) {
         echo "<script>alert('Vehicle not found'); window.location='rent.php';</script>";
         exit();
@@ -50,12 +52,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['vehicle_id'])) {
 
     $days = (strtotime($end_date) - strtotime($start_date)) / 86400 + 1;
     $total_amount = $price_per_day * $days;
-    $pickup_status = $vehicle['pickup_status']; // get current status from vehicles table
-$stmt = $conn->prepare("INSERT INTO bookings (user_name, vehicle_id, vehicle_name, vehicle_model, start_date, end_date, total_amount, pickup_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-$stmt->bind_param("sissssds", $username, $vehicle_id, $vehicle_name, $vehicle_model, $start_date, $end_date, $total_amount, $pickup_status);
-$stmt->execute();
-$stmt->close();
+    $pickup_status = "pending";
 
+    // Insert booking
+    $stmt = $conn->prepare("
+        INSERT INTO bookings 
+        (user_name, vehicle_id, vehicle_name, vehicle_model, start_date, end_date, total_amount, pickup_status) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    ");
+    $stmt->bind_param(
+        "sissssds", 
+        $username, 
+        $vehicle_id, 
+        $vehicle_name, 
+        $vehicle_model, 
+        $start_date, 
+        $end_date, 
+        $total_amount,
+        $pickup_status
+    );
+    $stmt->execute();
+    $stmt->close();
 }
 
 // Fetch user bookings
@@ -77,36 +94,13 @@ while ($row_p = $result->fetch_assoc()) {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Bookings</title>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link rel="stylesheet" href="booking.css">
-<style>
-/* Paid or Booked status */
-.paid-status {
-    color: #28a745;
-    font-weight: bold;
-}
-
-/* Green Pay button */
-.pay-button {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background 0.3s;
-}
-
-.pay-button:hover {
-    background-color: #218838;
-}
-</style>
+<link rel="stylesheet" href="mybooking.css">
 </head>
 <body>
 
 <header>
-    <img src="logo1.jpg" alt="Logo">
-    <h4>EasyRide</h4>
+    <img src="./img/logo1.png" alt="Logo">
+    <h4>Easy Ride</h4>
 </header>
 
 <div class="flex">
@@ -121,7 +115,7 @@ while ($row_p = $result->fetch_assoc()) {
 
     <div class="main">
         <h2>My Bookings</h2>
-        <table width="100%" cellpadding="10">
+        <table>
             <thead>
                 <tr>
                     <th>S.N</th>
@@ -135,39 +129,40 @@ while ($row_p = $result->fetch_assoc()) {
                 </tr>
             </thead>
             <tbody>
-            <?php if ($bookings->num_rows > 0): 
-                $sn = 1;
-                while ($row = $bookings->fetch_assoc()):
-                    $total_amount_str = number_format($row['total_amount'], 2, '.', '');
-            ?>
+                <?php if ($bookings->num_rows > 0): 
+                    $sn = 1;
+                    while ($row = $bookings->fetch_assoc()):
+                        $total_amount_str = number_format($row['total_amount'], 2, '.', '');
+                ?>
                 <tr>
                     <td><?= $sn ?></td>
                     <td><?= htmlspecialchars($row['vehicle_name']) ?></td>
                     <td><?= htmlspecialchars($row['vehicle_model']) ?></td>
                     <td><?= $row['start_date'] ?></td>
                     <td><?= $row['end_date'] ?></td>
-                    <td>NPR <?= $total_amount_str ?></td><td>
-    <?php 
-    // Check if pickup_status exists and its value
-    if (isset($row['pickup_status'])) {
-        if ($row['pickup_status'] === 'approved') {
-            echo '<span class="paid-status">Booked</span>'; // green for booked
-        } elseif ($row['pickup_status'] === 'rejected') {
-            echo '<span class="rejected-status">Rejected</span>'; // red for rejected
-        } else {
-            echo 'Pending'; // for other values or pending
-        }
-    } else {
-        echo 'Pending'; // if column is missing or null
-    }
-    ?>
-</td>
+                    <td>NPR <?= $total_amount_str ?></td>
+                    <td>
+                        <?php 
+                        if (isset($row['pickup_status'])) {
+                            if ($row['pickup_status'] === 'approved') {
+                              echo '<span class="paid-status">Booked</span><br>
+      <a href="receipt.php?booking_id='.$row['booking_id'].'"br
+      >View Receipt</a>';
 
-
-                    <!-- Payment column -->
+                                
+                            } elseif ($row['pickup_status'] === 'rejected') {
+                                echo '<span class="rejected-status">Rejected</span>';
+                            } else {
+                                echo 'Pending';
+                            }
+                        } else {
+                            echo 'Pending';
+                        }
+                        ?>
+                    </td>
                     <td>
                         <?php if (isset($payments[$row['booking_id']])): ?>
-                            <span class="paid-status">Paid</span>
+                            <span class="paid-status">Paid</span><br>
                         <?php else: 
                             $transaction_uuid = uniqid('TXN_');
                             $signed_fields = [
@@ -199,9 +194,9 @@ while ($row_p = $result->fetch_assoc()) {
                         <?php endif; ?>
                     </td>
                 </tr>
-            <?php $sn++; endwhile; else: ?>
+                <?php $sn++; endwhile; else: ?>
                 <tr><td colspan="8">No bookings found</td></tr>
-            <?php endif; ?>
+                <?php endif; ?>
             </tbody>
         </table>
     </div>

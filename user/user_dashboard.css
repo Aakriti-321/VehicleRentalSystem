@@ -1,0 +1,277 @@
+/* ================= GLOBAL RESET ================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f0f2f5;
+}
+
+/* ================= HEADER ================= */
+header {
+  width: 100%;
+  background: linear-gradient(90deg, #1e90ff, #3692b0);
+  padding: 15px 20px;
+  color: white;
+  font-weight: bold;
+  font-size: 24px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+header img {
+  width: 80px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.sidebar {
+ 
+  width: 220px;
+  background-color: #3f4e94;
+   margin-top: 10px;
+  color: white;
+  min-height: 100vh;
+  padding: 20px 10px;
+  position: fixed;
+  top: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sidebar img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  margin-bottom: 10px;
+}
+
+.sidebar h4 {
+  margin-bottom: 30px;
+  font-size: 16px;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 10px 15px;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.menu:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateX(5px);
+}
+
+.menu span {
+  margin-right: 8px;
+  font-size: 20px;
+}
+
+/* ================= MAIN CONTENT ================= */
+.main {
+  margin-left: 220px; /* space for sidebar */
+  padding: 120px 30px 30px 30px; /* top padding for header */
+}
+
+/* Dashboard text */
+.text h2 {
+  font-size: 32px;
+  color: #020c2a;
+  margin-bottom: 10px;
+}
+
+.text p {
+  color: #6e6e6e;
+  margin-bottom: 25px;
+}
+
+/* ================= SUMMARY CARDS ================= */
+.cards {
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+  margin: 30px 0;
+}
+
+.card {
+  background: #ffffff;
+  padding: 22px;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  transition: 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  flex: 1;
+  min-width: 200px;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 5px;
+  width: 100%;
+  background: var(--card-color);
+}
+
+.card h2 {
+  font-size: 34px;
+  font-weight: 700;
+}
+
+.card span {
+  font-size: 40px;
+  color: inherit;
+}
+
+.card-red { --card-color: #ff4d4d; color: #ff4d4d; }
+.card-blue { --card-color: #1e90ff; color: #1e90ff; }
+.card-green { --card-color: #28a745; color: #28a745; }
+
+.card p {
+  margin-top: 12px;
+  color: #666;
+}
+
+/* ================= TRENDING VEHICLES ================= */
+.trending {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+  width: 100%;
+}
+
+.vehicle {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 15px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.10);
+  transition: 0.3s ease;
+}
+
+.vehicle:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+
+.vehicle img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.vehicle h3 {
+  margin: 12px 0;
+  color: #222;
+  font-size: 18px;
+}
+
+.details {
+  margin-top: 10px;
+  background: #f3f3f3;
+  padding: 12px;
+  display: none;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.vehicle button {
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px;
+  font-size: 15px;
+  border: none;
+  background: #1a126f;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.vehicle button:hover {
+  background: #100b4f;
+}
+
+/* ================= MOST BOOKED VEHICLES ================= */
+.section_categories h2 {
+  font-size: 24px;
+  color: #020c2a;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.cardss {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.card2 {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  width: 220px;
+  padding: 15px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card2:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+
+.card2 img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.card2 h3 {
+  font-size: 16px;
+  color: #222;
+  margin-bottom: 12px;
+}
+
+.card2 button {
+  padding: 10px;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  background: #1e90ff;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.card2 button:hover {
+  background: #0d6efd;
+}

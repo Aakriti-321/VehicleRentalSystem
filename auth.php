@@ -1,6 +1,6 @@
 <?php
 session_start();
-$conn = new mysqli("localhost", "root", "", "vehiclerentalsystem");
+$conn = new mysqli("localhost", "root","", "vehiclerentalsystem");
 if ($conn->connect_error) die("Connection Failed");
 
 if (isset($_POST['login'])) {

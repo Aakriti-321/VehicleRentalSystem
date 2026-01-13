@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Payment Receipt</title>
+<style>
+body {
+    font-family: Arial;
+    background: #f4f4f4;
+}
+.receipt {
+    width: 700px;
+    margin: 30px auto;
+    background: #fff;
+    padding: 25px;
+    border: 1px solid #ddd;
+}
+h2 {
+    text-align: center;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+td {
+    padding: 10px;
+}
+.footer {
+    text-align: center;
+    margin-top: 20px;
+}
+.print-btn {
+    background: green;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="receipt">
+    
+    <h4>Receipt</h4>
+    <hr>
+
+    <table>
+        <tr>
+            <td><strong>Receipt No:</strong></td>
+            <td><?= $data['payment_id'] ?></td>
+        </tr>
+        <tr>
+            <td><strong>User:</strong></td>
+            <td><?= htmlspecialchars($data['user_name']) ?></td>
+        </tr>
+        <tr>
+            <td><strong>Vehicle:</strong></td>
+            <td><?= htmlspecialchars($data['vehicle_name']) ?> (<?= $data['vehicle_model'] ?>)</td>
+        </tr>
+        <tr>
+            <td><strong>Rental Period:</strong></td>
+            <td><?= $data['start_date'] ?> to <?= $data['end_date'] ?></td>
+        </tr>
+        <tr>
+            <td><strong>Total Amount:</strong></td>
+            <td>NPR <?= number_format($data['total_amount'], 2) ?></td>
+        </tr>
+      
+            <td><strong>Payment Date:</strong></td>
+            <td><?= $data['payment_date'] ?></td>
+        </tr>
+        <tr>
+            <td><strong>Payment Status:</strong></td>
+            <td style="color:green;">Completed</td>
+        </tr>
+    </table>
+
+    <div class="footer">
+        <button onclick="window.print()" class="print-btn">Print / Save PDF</button>
+        <p>Thank you for choosing Easy Ride 🚗</p>
+    </div>
+</div>
+
+</body>
+</html>
