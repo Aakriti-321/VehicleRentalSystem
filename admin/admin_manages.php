@@ -12,13 +12,14 @@ $admin_email = $_SESSION['admin'];
 
 
 $bookings = $conn->query("
-    SELECT b.*, v.model 
+    SELECT b.*, v.vehicle_name, v.model 
     FROM bookings b
     JOIN payments p ON b.booking_id = p.booking_id
     JOIN vehicles v ON b.vehicle_id = v.vehicle_id
     WHERE p.payment_status = 'completed'
     ORDER BY b.booking_id DESC
 ");
+
 ?>
 
 <!DOCTYPE html>
@@ -33,7 +34,7 @@ $bookings = $conn->query("
 <body>
 
 <header>
-    <img src="logo1.jpg" alt="Logo">
+    <img src="./img/logo1.png" alt="Logo">
     <h4>Easy Ride</h4>
 </header>
 
@@ -71,7 +72,7 @@ $bookings = $conn->query("
                 <th>Start</th>
                 <th>End</th>
                 <th>Total Amount</th>
-                <th>Pickup Status</th>
+                <th>Status</th>
             </tr>
 
             <?php while ($b = $bookings->fetch_assoc()): ?>
@@ -84,24 +85,25 @@ $bookings = $conn->query("
                 <td><?= $b['end_date'] ?></td>
                 <td>NPR <?= $b['total_amount'] ?></td>
 <td>
-    <?php 
-    // Normalize status to avoid case issues
-    $status = ucfirst(strtolower($b['pickup_status']));
+<?php 
+$status = strtolower(trim($b['pickup_status']));
 
-    if ($status === 'Pending'): ?>
-        <a href="approve_pickup.php?id=<?= $b['booking_id'] ?>" 
-           class="button" style="background:green;color:white;">Approve</a>
-        <a href="reject_pickup.php?id=<?= $b['booking_id'] ?>" 
-           class="button" style="background:red;color:white;">Reject</a>
-    <?php elseif ($status === 'Approved'): ?>
-        <span style="color:green;font-weight:bold;">Approved</span>
-    <?php elseif ($status === 'Rejected'): ?>
-        <span style="color:red;font-weight:bold;">Rejected</span>
-    <?php else: ?>
-        <span style="color:orange;font-weight:bold;">Unknown</span>
-    <?php endif; ?>
+if ($status === 'pending') {
+    echo '<a href="approve_pickup.php?id='.$b['booking_id'].'" 
+             class="button" style="background:green;color:white;">Approve</a>';
+    echo '&nbsp;';
+    echo '<a href="reject_pickup.php?id='.$b['booking_id'].'" 
+             class="button" style="background:red;color:white;">Reject</a>';
+} 
+elseif ($status === 'approved') {
+    echo '<span style="color:green;">Approved</span>';
+} 
+elseif ($status === 'rejected') {
+    echo '<span style="color:red;">Rejected</span>';
+}
+?>
+
 </td>
-
             </tr>
             <?php endwhile; ?>
 

@@ -65,7 +65,7 @@ if(isset($_GET['edit'])) {
 <body>
 
 <header>
-    <img src="logo1.jpg" alt="Logo">
+    <img src="./img/logo1.png" alt="Logo">
     <h4>Easy Ride</h4>
 </header>
 

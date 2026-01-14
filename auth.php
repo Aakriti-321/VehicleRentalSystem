@@ -1,6 +1,6 @@
 <?php
 session_start();
-$conn = new mysqli("localhost", "root", "", "vehiclerentalsystem");
+$conn = new mysqli("localhost", "root","", "projcet I");
 if ($conn->connect_error) die("Connection Failed");
 
 if (isset($_POST['login'])) {
@@ -10,7 +10,7 @@ if (isset($_POST['login'])) {
 
     if($email === "admin@gmail.com" && $password === "admin123") {
         $_SESSION['admin'] = "Admin";
-        header("Location: admin_dashboard.php");
+        header("Location: /admin/admin_dashboard.php");
         exit();
     }
 
@@ -23,7 +23,7 @@ if (isset($_POST['login'])) {
         if (password_verify($password, $user['password'])) {
             $_SESSION['email'] = $user['email'];
             $_SESSION['username'] = $user['username'];
-            header("Location: dashboard.php");
+            header("Location: /user/dashboard.php");
             exit;
         } else {
             echo "<script>alert('Invalid Password'); window.location='index.html';</script>";
