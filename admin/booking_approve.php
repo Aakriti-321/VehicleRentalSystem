@@ -1,6 +1,6 @@
 <?php
 session_start();
-$conn = new mysqli("localhost","root","","vehiclerentalsystem");
+$conn = new mysqli("localhost","root","","projcet I");
 if ($conn->connect_error) die("Connection Failed");
 
 if (!isset($_SESSION['admin'])) {
