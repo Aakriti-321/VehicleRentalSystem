@@ -1,0 +1,181 @@
+/* ================= GLOBAL RESET ================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f0f2f5;
+  
+}
+
+/* ================= HEADER ================= */
+header {
+  width: 100%;
+  background: linear-gradient(90deg, #1e90ff, #3692b0);
+  padding: 15px 20px;
+  color: white;
+  font-weight: bold;
+  font-size: 24px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+header img {
+  width: 80px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* ================= LAYOUT ================= */
+.flex {
+  display: flex;
+  margin: 10px;
+}
+
+
+.sidebar {
+ 
+  width: 220px;
+  background-color: #3f4e94;
+   margin-top: 10px;
+  color: white;
+  min-height: 100vh;
+  padding: 20px 10px;
+  position: fixed;
+  top: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sidebar img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  margin-bottom: 10px;
+}
+
+.sidebar h4 {
+  margin-bottom: 30px;
+  font-size: 16px;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 10px 15px;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.menu:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateX(5px);
+}
+
+.menu span {
+  margin-right: 8px;
+  font-size: 20px;
+}
+.main {
+  margin-left: 220px;
+  padding: 30px;
+}
+
+.text h2 {
+  font-size: 32px;
+  color: #020c2a;
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+.text p {
+  color: #6e6e6e;
+  margin-bottom: 25px;
+}
+
+table {
+  width: 150%;
+  padding: 10px;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+table thead {
+  background: #1d2d50;
+  color: white;
+}
+
+table th, table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #ccc;
+  font-size: 15px;
+  text-align: center;
+}
+
+table tbody tr:nth-child(even) {
+  background: #f3f4ff;
+}
+
+table tbody tr:hover {
+  background: #e0e4ff;
+}
+
+.paid-status {
+    color: #28a745;
+    font-weight: bold;
+}
+.rejected-status{
+    color: red;
+    font-weight: bold;
+}
+
+.pay-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s;
+}
+
+.pay-button:hover {
+    background-color: #218838;
+}
+button {
+  padding: 6px 12px;
+  background-color: #1e90ff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background-color: #0d6efd;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
